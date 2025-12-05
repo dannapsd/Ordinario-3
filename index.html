@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Modelo 3D con Hotspots</title>
+
+  <!-- Modelo 3D Viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 100vh;
+      background-color: #ffffff;
+    }
+
+    /* Estilos de tarjetas emergentes */
+    .info-box {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      width: 250px;
+      display: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .info-box h3 {
+      margin-top: 0;
+    }
+
+    .close-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- INFOBOX (para Opciones A y C) -->
+  <div id="info-box" class="info-box">
+    <h3 id="info-title"></h3>
+    <p id="info-text"></p>
+    <button class="close-btn" onclick="cerrarInfo()">Cerrar</button>
+  </div>
+
+  <!-- Visor del modelo -->
+  <model-viewer 
+    src="teddy_bear.glb"
+    alt="Teddy Bear"
+    camera-controls 
+    auto-rotate 
+    ar 
+    disable-zoom
+    exposure="1"
+    shadow-intensity="1"
+    shadow-softness="0.8">
+
+    <!-- 🔵 HOTSPOT 1 — Opción A -->
+    <button class="hotspot" slot="hotspot-1" 
+            data-position="0.1 0.3 0.2"
+            data-normal="0 1 0"
+            onclick="mostrarOpcionA()">
+    </button>
+
+    <!-- 🔵 HOTSPOT 2 — Opción C (Ficha técnica) -->
+    <button class="hotspot" slot="hotspot-2"
+            data-position="-0.2 0.4 0.1"
+            data-normal="0 1 0"
+            onclick="mostrarFichaTecnica()">
+    </button>
+
+    <!-- 🔵 HOTSPOT 3 — Abrir video de YouTube -->
+    <button class="hotspot" slot="hotspot-3"
+            data-position="0.0 0.2 0.3"
+            data-normal="0 1 0"
+            onclick="abrirVideo()">
+    </button>
+
+    <!-- 🔵 HOTSPOT 4 — Opción A -->
+    <button class="hotspot" slot="hotspot-4"
+            data-position="0.15 0.25 0.1"
+            data-normal="0 1 0"
+            onclick="mostrarOpcionA()">
+    </button>
+
+  </model-viewer>
+
+  <script>
+    function mostrarOpcionA() {
+      document.getElementById("info-title").textContent = "Opción A";
+      document.getElementById("info-text").textContent = "Esta es la descripción correspondiente a la Opción A.";
+      abrirInfo();
+    }
+
+    function mostrarFichaTecnica() {
+      document.getElementById("info-title").textContent = "Ficha Técnica del Osito";
+      document.getElementById("info-text").innerHTML = `
+        • Nombre: Teddy Bear<br>
+        • Material: Felpa sintética<br>
+        • Altura: 25 cm<br>
+        • Color: Café claro<br>
+        • Peso aproximado: 180 g<br>
+        • Función: Juguete decorativo<br>
+      `;
+      abrirInfo();
+    }
+
+    function abrirVideo() {
+      window.open("https://youtu.be/mOpVKrHcGRA?si=qRPySbyYm8lNd47L", "_blank");
+    }
+
+    function abrirInfo() {
+      document.getElementById("info-box").style.display = "block";
+    }
+
+    function cerrarInfo() {
+      document.getElementById("info-box").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
